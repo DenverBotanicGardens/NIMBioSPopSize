@@ -21,6 +21,7 @@ relative counts...
 library(gjam)
 library(neotoma)
 library(ggplot2)
+library(plyr)
 ```
 
 # Gather data from Neotoma   
@@ -56,21 +57,12 @@ eastern.us <- get_dataset(loc = c(-97.69, 30, -68, 49)) #6262 records
 
 eastern.us.download <- get_download(eastern.us)
 
-eastern.us.download$`63`$counts
-eastern.us.download$`63`$dataset$site$long #lat #elev
-as.character(eastern.us.download$`63`$taxon.list$taxon.name)
-
-x<- eastern.us.download[[1]]
-
 eastern.us.counts <- lapply(eastern.us.download, function(x){
   out <- cbind(x$counts, "lon"= x$dataset$site$long,
         "lat" = x$dataset$site$lat, "elev" = x$dataset$site$elev)
   out <- data.frame(out)
   out
 })
-
-library(plyr)
-
 
 class(eastern.us.counts[[3]])
 
