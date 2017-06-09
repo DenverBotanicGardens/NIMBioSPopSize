@@ -56,13 +56,24 @@ eastern.us <- get_dataset(loc = c(-97.69, 30, -68, 49)) #6262 records
 
 eastern.us.download <- get_download(eastern.us)
 
-head(eastern.us.download$`63`$counts)
-eastern.us.download$`63`
+eastern.us.download$`63`$counts
+eastern.us.download$`63`$dataset$site$long #lat #elev
+as.character(eastern.us.download$`63`$taxon.list$taxon.name)
+
+x<- eastern.us.download[[1]]
 
 eastern.us.counts <- lapply(eastern.us.download, function(x){
-  counts <- x$counts
-  
+  data.frame(x$counts, "lon"= x$dataset$site$long,
+        "lat" = x$dataset$site$lat, "elev" = x$dataset$site$elev)
 })
+
+library(plyr)
+
+
+str(eastern.us.counts[[3]])
+
+east.counts <- do.call(rbind.fill, eastern.us.counts)
+
 ```
 
 
