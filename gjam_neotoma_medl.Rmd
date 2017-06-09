@@ -9,6 +9,7 @@ Generalized Joint Attribute Modeling
 
 ```{r setup, include=FALSE}
 install.packages("gjam")
+install.packages("neotoma")
 ```
 
 Y matrix is the input
@@ -18,7 +19,8 @@ relative counts...
 
 ```{r}
 library(gjam)
-help(gjam)
+library(neotoma)
+library(ggplot2)
 ```
 
 # Gather data from Neotoma   
@@ -32,16 +34,7 @@ R packages:
   - paleofire  charcoal data   
   - neotoma  uses API to send data requests to Neotoma
 ```{r}
-#install.packages("neotoma")
-library(neotoma)
-library(ggplot2)
-
-get_site()
-
-browse(1)
-
 all.sites <- get_site()
-
 head(all.sites)
 
 ggplot(all.sites, aes(site.name,elev))+
@@ -49,18 +42,27 @@ ggplot(all.sites, aes(site.name,elev))+
 
 plot(density(all.sites$elev, from=0, na.rm=TRUE))
 
+#List
 all.datasets <- get_dataset()
 
-names(all.datasets)
-class(all.datasets)
-head(all.datasets) # 
-
-all.datasets$`31`
-
-browse(all.datasets)
+#Web browser view
 browse(all.datasets$`31`)
 
-eastern.us <- get_dataset(loc = c())
+# North Dakota/MN 48.859419, -97.694836
+# Maine 47.034696, -68.295424
+# Eastern TX 30.107257, -94.380886
+# North Florida 30.107257, -94.380886
+eastern.us <- get_dataset(loc = c(-97.69, 30, -68, 49)) #6262 records
+
+eastern.us.download <- get_download(eastern.us)
+
+head(eastern.us.download$`63`$counts)
+eastern.us.download$`63`
+
+eastern.us.counts <- lapply(eastern.us.download, function(x){
+  counts <- x$counts
+  
+})
 ```
 
 
