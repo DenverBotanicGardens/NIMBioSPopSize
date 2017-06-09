@@ -50,6 +50,17 @@ ggplot(all.sites, aes(site.name,elev))+
 plot(density(all.sites$elev, from=0, na.rm=TRUE))
 
 all.datasets <- get_dataset()
+
+names(all.datasets)
+class(all.datasets)
+head(all.datasets) # 
+
+all.datasets$`31`
+
+browse(all.datasets)
+browse(all.datasets$`31`)
+
+eastern.us <- get_dataset(loc = c())
 ```
 
 
